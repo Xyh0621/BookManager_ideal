@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--
+    名称空间
+-->
+<mapper namespace="mapper.BorrowMapper">
+
+    <select id="selectAll" resultType="pojo.Borrow">
+        select * from tb_borrow;
+    </select>
+
+
+    <insert id="add">
+        insert into tb_borrow (borrowID, rdID, bkID, idContinueTimes, idDateOut, idDateRetPlan, IdDateRetAct, idOverDay, idOverMoney, idPunishMoney, isHasReturn, OperatorLend, OperatorRet)
+        values (#{borrowID},#{rdID},#{bkID},#{idContinueTimes},#{idDateOut},#{idDateRetPlan},#{IdDateRetAct},#{idOverDay},#{idOverMoney},#{idPunishMoney},#{isHasReturn},#{OperatorLend},#{OperatorRet})
+    </insert>
+
+
+    <update id="update">
+        update tb_borrow
+        <set>
+            <if test="rdID != null">
+                rdID = #{rdID},
+            </if>
+            <if test="bkID != null">
+                bkID = #{bkID},
+            </if>
+            <if test="IdContinueTimes != null">
+                IdContinueTimes = #{IdContinueTimes},
+            </if>
+            <if test="IdDateOut != null">
+                IdDateOut = #{IdDateOut},
+            </if>
+            <if test="IdDateRetPlan != null">
+                IdDateRetPlan = #{IdDateRetPlan},
+            </if>
+            <if test="IdDateRetAct != null">
+                IdDateRetAct = #{IdDateRetAct},
+            </if>
+            <if test="IdOverDay != null">
+                IdOverDay = #{IdOverDay},
+            </if>
+            <if test="IdOverMoney != null and IdOverMoney != ''">
+                idOverMoney = #{IdOverMoney},
+            </if>
+            <if test="IdPunishMoney != null and IdPunishMoney != ''">
+                IdPunishMoney = #{IdPunishMoney},
+            </if>
+            <if test="IsHasReturn != null and IsHasReturn != ''">
+                IsHasReturn = #{IsHasReturn},
+            </if>
+            <if test="IsHasReturn != null and IsHasReturn != ''">
+                IsHasReturn = #{IsHasReturn},
+            </if>
+            <if test="OperatorLend != null and OperatorLend != ''">
+                OperatorLend = #{OperatorLend},
+            </if>
+            <if test="OperatorRet != null and OperatorRet != ''">
+                OperatorRet = #{OperatorRet},
+            </if>
+        </set>
+        where BorrowID = #{BorrowID};
+    </update>
+
+    <select id="selectByCondition" resultType="pojo.Borrow">
+        select *
+        from tb_borrow
+        <where>
+            <if test="BorrowID != null and BorrowID != ''">
+                and BorrowID = #{BorrowID}
+            </if>
+            <if test="rdID != null and rdID != ''">
+                and rdID = #{rdID}
+            </if>
+            <if test="bkID != null and bkID != ''">
+                and bkID = #{bkID}
+            </if>
+            <if test="IsHasReturn != null">
+                and IsHasReturn = #{IsHasReturn}
+            </if>
+        </where>
+    </select>
+
+</mapper>

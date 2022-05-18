@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--
+    名称空间
+-->
+<mapper namespace="mapper.ReaderMapper">
+
+    <select id="selectAll" resultType="pojo.Reader">
+    select * from tb_reader;
+    </select>
+
+
+    <insert id="add">
+        insert into tb_reader (rdID,rdName,rdSex,rdType,rdPhone,rdEmail,rdDateReg,rdBorrowQty,rdStatus,rdPwd)
+        values (#{rdID},#{rdName},#{rdSex},#{rdType},#{rdPhone},#{rdEmail},#{rdDateReg},#{rdBorrowQty},#{rdStatus},#{rdPwd})
+    </insert>
+
+
+    <delete id="deleteById">
+        delete from tb_reader where rdID = #{id};
+    </delete>
+
+
+
+    <update id="update">
+        update tb_reader
+        <set>
+            <if test="rdName != null and rdName != ''">
+                rdName = #{rdName},
+            </if>
+            <if test="rdSex != null and rdSex != ''">
+                rdSex = #{rdSex},
+            </if>
+            <if test="rdType != null">
+                rdType = #{rdType},
+            </if>
+            <if test="rdPhone != null and rdPhone != ''">
+                rdPhone = #{rdPhone},
+            </if>
+            <if test="rdEmail != null and rdEmail != ''">
+                rdEmail = #{rdEmail},
+            </if>
+            <if test="rdDateReg != null">
+                rdDateReg = #{rdDateReg},
+            </if>
+            <if test="rdBorrowQty != null">
+                rdBorrowQty = #{rdBorrowQty},
+            </if>
+            <if test="rdStatus != null">
+                rdStatus = #{rdStatus},
+            </if>
+            <if test="rdPwd != null and rdPwd != ''">
+                rdPwd = #{rdPwd}
+            </if>
+        </set>
+        where rdID = #{rdID};
+    </update>
+
+    <select id="selectByCondition" resultType="pojo.Reader">
+        select *
+        from tb_reader
+        <where>
+            <if test="rdID != null">
+                and rdID = #{rdID}
+            </if>
+            <if test="rdName != null and rdName != ''">
+                and rdName regexp #{rdName}
+            </if>
+            <if test="rdType != null">
+                and rdType = #{rdType}
+            </if>
+            <if test="rdStatus != null and rdStatus != ''">
+                and rdStatus = #{rdStatus}
+            </if>
+            <if test="rdPwd != null and rdPwd != ''">
+                and rdPwd = #{rdPwd}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByrdID" resultType="pojo.Reader">
+        select * from tb_reader where rdID = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="mapper.BookMapper">
+    <select id="selectAll" resultType="pojo.Book">
+        select * from tb_book;
+    </select>
+
+
+    <insert id="add">
+        insert into tb_book (bkID, bkCode, bkName, bkAuthor, bkPress, bkDatePress, bkISBN, bkCatalog, bkLanguage, bkPages, bkPrice, bkDateln, bkBrief, bkStatus)
+        values (#{bkID},#{bkCode},#{bkName},#{bkAuthor},#{bkPress},#{bkDatePress},#{bkISBN},#{bkCatalog},#{bkLanguage},#{bkPages},#{bkPrice},#{bkDateln},#{bkBrief},#{bkStatus})
+    </insert>
+
+
+    <delete id="deleteById">
+        delete from tb_book where bkID = #{id};
+    </delete>
+
+
+    <delete id="deleteByIds">
+        delete from tb_book where bkID in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <update id="update">
+        update tb_book
+        <set>
+            <if test="bkCode != null">
+                bkCode = #{bkCode},
+            </if>
+            <if test="bkName != null and bkName != ''">
+                bkName = #{bkName},
+            </if>
+            <if test="bkAuthor != null and bkAuthor != ''">
+                bkAuthor = #{bkAuthor},
+            </if>
+            <if test="bkPress != null and bkPress != ''">
+                bkPress = #{bkPress},
+            </if>
+            <if test="bkDatePress != null">
+                bkDatePress = #{bkDatePress},
+            </if>
+            <if test="bkISBN != null and bkISBN != ''">
+                bkISBN = #{bkISBN},
+            </if>
+            <if test="bkCatalog != null and bkCatalog != ''">
+                bkCatalog = #{bkCatalog},
+            </if>
+            <if test="bkLanguage != null">
+                bkLanguage = #{bkLanguage},
+            </if>
+            <if test="bkPages != null">
+                bkPages = #{bkPages},
+            </if>
+            <if test="bkPrice != null">
+                bkPrice = #{bkPrice},
+            </if>
+            <if test="bkDateln != null">
+                bkDateln = #{bkDateln},
+            </if>
+            <if test="bkBrief != null and bkBrief != ''">
+                bkBrief = #{bkBrief},
+            </if>
+            <if test="bkStatus != null">
+                bkStatus = #{bkStatus},
+            </if>
+        </set>
+        where bkID = #{bkID};
+    </update>
+
+
+    <select id="selectByCondition" resultType="pojo.Book">
+        select *
+        from tb_book
+        <where>
+            <if test="bkCode != null and bkCode != ''">
+                and bkCode regexp #{bkCode}
+            </if>
+            <if test="bkName != null and bkName != ''">
+                and bkName regexp #{bkName}
+            </if>
+            <if test="bkAuthor != null and bkAuthor != ''">
+                and bkAuthor regexp #{bkAuthor}
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="selectAllByPage" resultType="pojo.Book">
+        select * from tb_book limit #{begin},#{size}
+    </select>
+
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select count(*) from tb_book
+    </select>
+
+    <select id="selectBookByID" resultType="pojo.Book">
+        select  * from tb_book where bkID = #{bkID}
+    </select>
+
+</mapper>
